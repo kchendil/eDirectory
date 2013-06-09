@@ -25,16 +25,17 @@ edirectory_conf_file=node['edirectory']['edirectory_conf_file']
 
 
 
-execute "Configure eDirectory" do
- command " #{edirectory_install_loc}/bin/ndsconfig new -T -t #{edirectory_tree_name} -n #{edirectory_context} -a \"#{edirectory_admin}\.#{edirectory_context}\"  -D \"#{edirectory_dib_loc}\" -c -d \"#{edirectory_dib_loc}/data/dib\" -B @#{edirectory_port} -L #{edirectory_ldap_clear_port} -l #{edirectory_ldap_ssl_port} -o #{edirectory_imonitor_http_port} -O #{edirectory_imonitor_https_port} -w #{edirectory_password} --config-file #{edirectory_conf_file} > \"/var/opt/novell/ndsconfig_new.log\""  
+execute "Disable LDAPS" do
+ 
+ command ". /opt/novell/eDirectory/bin/ndspath; ldapconfig set \"Require TLS for Simple Binds with Password\"=no -t #{edirectory_tree_name} -w #{edirectory_password} -a #{edirectory_admin}.#{edirectory_context}"  
   
   # command " /opt/novell/eDirectory/bin/ndsconfig new -T -t VAGRANT -n servers.system -a \"admin.sa.system\"  -D \"/var/opt/novell/eDirectory\" -c -d \"/var/opt/novell/eDirectory/data/dib\" -B @524 -L 389 -l 636 -o 8028 -O 8030 -w n --config-file /etc/opt/novell/eDirectory/conf/nds.conf > \"/var/opt/novell/ndsconfig_new.log\""  
-   creates "/var/opt/novell/ndsconfig_new.log"
+  # creates "/var/opt/novell/ndsconfig_new.log"
   action :run
   
 end
 
-#/opt/novell/eDirectory/bin/ndsconfig new -T -t novell -n servers.system -a "admin.sa.system"  -D "/var/opt/novell/eDirectory" -c -d "/var/opt/novell/eDirectory/data/dib" -B @524 -L 389 -l 636 -o 8028 -O 8030 -w n --config-file /etc/opt/novell/eDirectory/conf/nds.conf > "/var/opt/novell/ndsconfig_new.log"
+
 
 
 
