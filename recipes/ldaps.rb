@@ -28,10 +28,7 @@ edirectory_conf_file=node['edirectory']['edirectory_conf_file']
 execute "Disable LDAPS" do
  
  command ". /opt/novell/eDirectory/bin/ndspath; ldapconfig set \"Require TLS for Simple Binds with Password\"=no -t #{edirectory_tree_name} -w #{edirectory_password} -a #{edirectory_admin}.#{edirectory_context}"  
-  
-  # command " /opt/novell/eDirectory/bin/ndsconfig new -T -t VAGRANT -n servers.system -a \"admin.sa.system\"  -D \"/var/opt/novell/eDirectory\" -c -d \"/var/opt/novell/eDirectory/data/dib\" -B @524 -L 389 -l 636 -o 8028 -O 8030 -w n --config-file /etc/opt/novell/eDirectory/conf/nds.conf > \"/var/opt/novell/ndsconfig_new.log\""  
-  # creates "/var/opt/novell/ndsconfig_new.log"
-  action :run
+ action :run
   
 end
 
